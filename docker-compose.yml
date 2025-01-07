@@ -10,15 +10,13 @@ services:
       #BIND MOUNT and read Only, d container sud never change it
       - ./src:/var/www/html
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+#      - ./nginx.conf:/etc/nginx/nginx.conf:ro
       #d default.conf will be merged into nginx conf file setup inside d nginx image
       #This will allow us to pass-in our own web server conf file
     depends_on:
       - php
       - mysql
-  laravel:
-    build:
-      context: .
-      dockerfile: dockerfiles/laravel.dockerfile
+
   php:
     build:
       context: .
