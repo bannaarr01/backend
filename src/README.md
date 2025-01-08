@@ -3,7 +3,10 @@
 ```bash
     docker-compose up
 ```
+You should see: \
+<img src="img.png" width=280 />
 
+- Then
 - Open another terminal and run:
 ```bash
     docker-compose run --rm artisan migrate
