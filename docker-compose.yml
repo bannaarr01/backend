@@ -31,6 +31,10 @@ services:
     image: mysql:8.4.3
     env_file:
       - ./env/mysql.env
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysqldb-data:/var/lib/mysql
 
   composer:
     build:
@@ -56,3 +60,7 @@ services:
     entrypoint: ["npm"]
     volumes:
       - ./src:/var/www/html
+
+volumes:
+  mysqldb-data:
+    driver: local
