@@ -3,64 +3,117 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Fruit;
+use App\Http\Requests\FruitRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\Fruit;
 
 class FruitController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Return Fruit List
+     *
+     * @return JsonResponse
      */
-    public function index()
+    public function findAll(): JsonResponse
     {
-        //
+        $fruits = Fruit::all();
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'OK',
+            'data' => $fruits
+        ], 200);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create new Fruit
+     *
+     * @param FruitRequest $request
+     * @return JsonResponse
      */
-    public function create()
+    public function create(FruitRequest $request): JsonResponse
     {
-        //
+        $request->validated();
+
+        $fruitData = $request->safe()->only(['name']);
+
+        $fruit = Fruit::create($fruitData);
+
+        return response()->json([
+            'statusCode' => 201,
+            'message' => 'OK',
+            'data' => $fruit,
+        ], 201);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Find and validate fruit existence
+     *
+     * @param int $fruitId
+     * @return Fruit|JsonResponse
      */
-    public function store(Request $request)
+    protected function findFruit(int $fruitId): Fruit|JsonResponse
     {
-        //
+        $fruit = Fruit::find($fruitId);
+
+        if (!$fruit) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid fruit id',
+            ], 400);
+        }
+
+        return $fruit;
     }
 
     /**
-     * Display the specified resource.
+     * Update the specified fruit.
+     *
+     * @param Request $request
+     * @param int $fruitId
+     * @return JsonResponse
      */
-    public function show(Fruit $fruit)
+    public function update(Request $request, int $fruitId): JsonResponse
     {
-        //
+        $fruit = $this->findFruit($fruitId);
+
+        // return it immediately
+        if ($fruit instanceof JsonResponse) {
+            return $fruit;
+        }
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255'
+        ]);
+
+        $fruit->update($validated);
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'OK',
+            'data' => $fruit,
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Remove the specified fruit.
+     *
+     * @param int $fruitId
+     * @return JsonResponse
      */
-    public function edit(Fruit $fruit)
+    public function remove(int $fruitId): JsonResponse
     {
-        //
-    }
+        $fruit = $this->findFruit($fruitId);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Fruit $fruit)
-    {
-        //
-    }
+        if ($fruit instanceof JsonResponse) {
+            return $fruit;
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Fruit $fruit)
-    {
-        //
+        $fruit->delete();
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'OK'
+        ]);
     }
 }
