@@ -1,0 +1,58 @@
+## 3. API Development Questions
+
+### (A) Basic
+**Task:** Create an API endpoint `/api/hello` that responds with `{"message": "Hello, World!"}`.
+
+### (B) Intermediate
+**Task:** Build an API with the following features:
+- Supports POST requests to add data to an array or database.
+- Supports GET requests to retrieve the list of data.
+
+### (C) Advanced
+**Task:** Develop a RESTful API with the following endpoints:
+- **POST**: Add a new data item.
+- **GET**: Retrieve a list of data items.
+- **PUT**: Update a specific item by its ID.
+- **DELETE**: Delete a specific item by its ID.
+
+# Theoretical Essay Questions
+
+## 1. MVC Understanding
+
+### (1) Basic
+**Question:** Describe the role of Model, View, and Controller in the MVC architecture.
+
+### (2) Intermediate
+**Question:** How can complex business logic be separated from the Controller in an MVC framework? Provide examples.
+
+## 2. Object-Oriented Programming
+
+### (3) Basic
+**Question:** List and explain the four fundamental principles of Object-Oriented Programming (OOP).
+
+### (4) Intermediate
+**Question:** Provide an example of using Polymorphism in an implementation and explain its advantages.
+
+## 3. Modern Web Development
+
+### (5) Basic
+**Question:** Explain the differences between SPA (Single Page Application) and SSR (Server-Side Rendering), along with their advantages.
+
+### (6) Intermediate
+**Question:** Describe the basic structure of a CI/CD pipeline and explain its benefits.
+
+### (7) Advanced
+**Question:** Compare RESTful APIs and GraphQL. Provide examples of when to use each.
+
+## 4. Database and Persistence
+
+### (8) Basic
+**Question:** What is database normalization? Explain the differences between 1NF, 2NF, and 3NF.
+
+### (9) Intermediate
+**Question:** Compare NoSQL and relational databases. Discuss suitable use cases for each.
+
+## 5. Performance and Security
+
+### (10) Advanced
+**Question:** List five methods to improve the performance of a web application and provide examples for each.
