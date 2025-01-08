@@ -11,10 +11,21 @@ use App\Models\Fruit;
 class FruitController extends Controller
 {
     /**
-     * Return Fruit List
-     *
-     * @return JsonResponse
-     */
+     * @OA\Get(
+     *     path="/api/fruits",
+     *     tags={"Fruits"},
+     *     summary="Returns lists of fruits",
+     *     description="Returns the list of fruits available in DB",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Fruit")
+     *         )
+     *     ),
+     * )
+    */
     public function findAll(): JsonResponse
     {
         $fruits = Fruit::all();
@@ -26,10 +37,28 @@ class FruitController extends Controller
     }
 
     /**
-     * Create new Fruit
-     *
-     * @param FruitRequest $request
-     * @return JsonResponse
+     * @OA\Post(
+     *     path="/api/fruits",
+     *     tags={"Fruits"},
+     *     summary="Persist a new fruit into the DB",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful created",
+     *         @OA\JsonContent(ref="#/components/schemas/Fruit"),
+     *     ),
+     *     @OA\RequestBody(
+     *          description="Persist a fruit into the DB",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={"name"},
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string",
+     *                  example="Apple"
+     *              )
+     *          )
+     *      )
+     *  )
      */
     public function create(FruitRequest $request): JsonResponse
     {
@@ -67,11 +96,43 @@ class FruitController extends Controller
     }
 
     /**
-     * Update the specified fruit.
-     *
-     * @param Request $request
-     * @param int $fruitId
-     * @return JsonResponse
+     * @OA\Put(
+     *     path="/api/fruits/{id}",
+     *     tags={"Fruits"},
+     *     summary="Update a fruit by ID",
+     *     description="For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the fruit that needs to be updated",
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64",
+     *             minimum=1
+     *         )
+     *     ),
+     *          @OA\RequestBody(
+     *           description="Persist a fruit into the DB",
+     *           required=true,
+     *           @OA\JsonContent(
+     *               required={"name"},
+     *               @OA\Property(
+     *                   property="name",
+     *                   type="string",
+     *                   example="Apple"
+     *               )
+     *           )
+     *       ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid fruit id"
+     *     ),
+     *          @OA\Response(
+     *          response=200,
+     *          description="OK"
+     *      ),
+     * ),
      */
     public function update(Request $request, int $fruitId): JsonResponse
     {
@@ -96,10 +157,27 @@ class FruitController extends Controller
     }
 
     /**
-     * Remove the specified fruit.
-     *
-     * @param int $fruitId
-     * @return JsonResponse
+     * @OA\Delete(
+     *     path="/api/fruits/{id}",
+     *     tags={"Fruits"},
+     *     summary="Delete fruit by ID",
+     *     description="For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the fruit that needs to be deleted",
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64",
+     *             minimum=1
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid fruit id"
+     *     ),
+     * ),
      */
     public function remove(int $fruitId): JsonResponse
     {

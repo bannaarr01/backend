@@ -1,0 +1,217 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Web Engineer Api",
+        "description": "Exam OpenApi description",
+        "contact": {
+            "email": "joshboluwaji6@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/api/fruits": {
+            "get": {
+                "tags": [
+                    "Fruits"
+                ],
+                "summary": "Returns lists of fruits",
+                "description": "Returns the list of fruits available in DB",
+                "operationId": "5fa35259a4925e52488713db7350cc3d",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Fruit"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fruits"
+                ],
+                "summary": "Persist a new fruit into the DB",
+                "operationId": "b53ee706feaa95e1f167f64cecc98b5b",
+                "requestBody": {
+                    "description": "Persist a fruit into the DB",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Apple"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fruit"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/fruits/{id}": {
+            "put": {
+                "tags": [
+                    "Fruits"
+                ],
+                "summary": "Update a fruit by ID",
+                "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+                "operationId": "dce001e0e0ae7e1971b65bd1e0d433d6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the fruit that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Persist a fruit into the DB",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Apple"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid fruit id"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Fruits"
+                ],
+                "summary": "Delete fruit by ID",
+                "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+                "operationId": "f6b3d1de957acdcd82172c7d51b218db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the fruit that needs to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid fruit id"
+                    }
+                }
+            }
+        },
+        "/api/hello": {
+            "get": {
+                "tags": [
+                    "Hello"
+                ],
+                "summary": "Returns Hello, world!",
+                "description": "Returns Hello, world!",
+                "operationId": "8733cc6d3b0bcab646418f5ac7ab8977",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Fruit": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Apple"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-09 10:00:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-09 10:00:00"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Fruits",
+            "description": "Fruits"
+        },
+        {
+            "name": "Hello",
+            "description": "Hello"
+        }
+    ]
+}
